@@ -18,6 +18,7 @@ class MedicineApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'آلارم دارو',
       theme: ThemeData(
           fontFamily: "Popins",
           primaryColor: Color.fromRGBO(7, 190, 200, 1),
