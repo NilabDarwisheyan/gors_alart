@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Pill {
   int id;
   String name;
@@ -19,6 +21,12 @@ class Pill {
       this.notifyId});
 
 
+  static int _idAutoGen = 4;
+  static void addPill(Pill pill){
+    pill.id = _idAutoGen;
+    pills[_idAutoGen] = pill;
+    _idAutoGen++;
+  }
   static Map<int,Pill> pills = {
     1:Pill(
         id:1,
@@ -27,7 +35,7 @@ class Pill {
         type: "pills",
         howManyWeeks:2,
         medicineForm: "Pill",
-        time: 1669042926954,
+        time: 1669062926954,
         notifyId: 123123),
     2:Pill(
         id:2,
@@ -36,7 +44,7 @@ class Pill {
         type: "ml",
         howManyWeeks:2,
         medicineForm: "Syrup",
-        time: 1669042826954,
+        time: 1669062826954,
         notifyId: 123123),
     3:Pill(
         id:3,
@@ -45,81 +53,12 @@ class Pill {
         type: "pills",
         howManyWeeks:2,
         medicineForm: "Capsule",
-        time: 1669052726954,
+        time: 1669062726954,
         notifyId: 123123),
   };
-  //   Pill(
-  //       id:1,
-  //       name: "paracetamol",
-  //       amount:"2",
-  //       type: "pills",
-  //       howManyWeeks:2,
-  //       medicineForm: "Syrup",
-  //       time: 123132123,
-  //       notifyId: 123123),
-  //   Pill(
-  //       id:1,
-  //       name: "paracetamol",
-  //       amount:"2",
-  //       type: "pills",
-  //       howManyWeeks:2,
-  //       medicineForm: "Syrup",
-  //       time: 123132123,
-  //       notifyId: 123123),
-  //   Pill(
-  //       id:1,
-  //       name: "paracetamol",
-  //       amount:"2",
-  //       type: "pills",
-  //       howManyWeeks:2,
-  //       medicineForm: "Syrup",
-  //       time: 123132123,
-  //       notifyId: 123123),
-  //   Pill(
-  //       id:1,
-  //       name: "paracetamol",
-  //       amount:"2",
-  //       type: "pills",
-  //       howManyWeeks:2,
-  //       medicineForm: "Syrup",
-  //       time: 123132123,
-  //       notifyId: 123123),
-  // ];
-
-  //------------------set pill to map-------------------
-
-  Map<String, dynamic> pillToMap() {
-    Map<String, dynamic> map = Map();
-    map['id'] = this.id;
-    map['name'] = this.name;
-    map['amount'] = this.amount;
-    map['type'] = this.type;
-    map['howManyWeeks'] = this.howManyWeeks;
-    map['medicineForm'] = this.medicineForm;
-    map['time'] = this.time;
-    map['notifyId'] = this.notifyId;
-    return map;
-  }
-
-  //=====================================================
-
-  //---------------------create pill object from map---------------------
-  Pill pillMapToObject(Map<String, dynamic> pillMap) {
-    return Pill(
-        id: pillMap['id'],
-        name: pillMap['name'],
-        amount: pillMap['amount'],
-        type: pillMap['type'],
-        howManyWeeks: pillMap['howManyWeeks'],
-        medicineForm: pillMap['medicineForm'],
-        time: pillMap['time'],
-        notifyId: pillMap['notifyId']);
-  }
-//=====================================================================
 
 
-  //---------------------| Get the medicine image path |-------------------------
-  String get image{
+   String get image{
     switch(this.medicineForm){
       case "Syrup": return "assets/images/syrup.png"; break;
       case "Pill":return "assets/images/pills.png"; break;

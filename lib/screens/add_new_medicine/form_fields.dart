@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:medicine/screens/add_new_medicine/slider.dart';
 
 
 class FormFields extends StatelessWidget {
   final List<String> weightValues = ["pills", "ml", "mg"];
   final int howManyWeeks;
-  final String selectWeight;
+  final String selectedUnit;
   final Function onPopUpMenuChanged, onSliderChanged;
   final TextEditingController nameController;
   final TextEditingController amountController;
-  FormFields(this.howManyWeeks,this.selectWeight,this.onPopUpMenuChanged,this.onSliderChanged,this.nameController,this.amountController);
+  FormFields(this.howManyWeeks,this.selectedUnit,this.onPopUpMenuChanged,this.onSliderChanged,this.nameController,this.amountController);
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +20,16 @@ class FormFields extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: constrains.maxHeight * 0.22,
+            height: constrains.maxHeight * 0.32,
             child: TextField(
-              textInputAction: TextInputAction.next,
-              controller: nameController,
+              decoration: InputDecoration(
+                hintText: 'نام دارو',
+              ),
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
                   fontSize: 16.0),
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 20.0),
-                  labelText: "Pills Name",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide:
-                      BorderSide(width: 0.5, color: Colors.grey))),
-              onSubmitted: (val)=>focus.nextFocus(),
+
             ),
           ),
           SizedBox(
@@ -48,23 +40,16 @@ class FormFields extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child: Container(
-                  height: constrains.maxHeight * 0.22,
+                  height: constrains.maxHeight * 0.32,
                   child: TextField(
-                    controller: amountController,
                     keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                    hintText: 'مقدار',
+                  ),
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
                         fontSize: 16.0),
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
-                        labelText: "Pills Amount",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                                width: 0.5, color: Colors.grey))),
-                    onSubmitted: (val)=>focus.unfocus(),
                   ),
                 ),
               ),
@@ -74,13 +59,13 @@ class FormFields extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
-                  height: constrains.maxHeight * 0.22,
+                  height: constrains.maxHeight * 0.32,
                   child: DropdownButtonFormField(
                     onTap: ()=>focus.unfocus(),
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 20.0),
-                        labelText: "Type",
+                        labelText: "واحد",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide(
@@ -92,7 +77,7 @@ class FormFields extends StatelessWidget {
                     ))
                         .toList(),
                     onChanged: (value) => this.onPopUpMenuChanged(value),
-                    value: selectWeight,
+                    value: selectedUnit,
                   ),
                 ),
               )
@@ -101,29 +86,6 @@ class FormFields extends StatelessWidget {
           SizedBox(
             height: constrains.maxHeight * 0.1,
           ),
-          Container(
-            height: constrains.maxHeight * 0.1,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: FittedBox(
-                child: Text(
-                  "How long?",
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            height: constrains.maxHeight * 0.18,
-            child: UserSlider(this.onSliderChanged,this.howManyWeeks)
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FittedBox(child: Text('$howManyWeeks weeks')),
-          )
         ],
       ),
     );

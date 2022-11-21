@@ -4,16 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:medicine/database/repository.dart';
-import 'package:medicine/helpers/snack_bar.dart';
 import 'package:medicine/models/medicine_type.dart';
 import 'package:medicine/models/pill.dart';
-import 'package:medicine/notifications/notifications.dart';
 import '../../helpers/platform_flat_button.dart';
 import '../../screens/add_new_medicine/form_fields.dart';
 import '../../screens/add_new_medicine/medicine_type_card.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class AddNewMedicine extends StatefulWidget {
   @override
@@ -24,58 +19,48 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final Snackbar snackbar = Snackbar();
 
   //medicine types
-  final List<String> weightValues = ["pills", "ml", "mg"];
+  final List<String> pillUnits = ["pills", "ml", "mg"];
 
   //list of medicines forms objects
-  final List<MedicineType> medicineTypes = [
-    MedicineType("Syrup", Image.asset("assets/images/syrup.png"), true),
-    MedicineType(
+  final List<MedicineForm> medicineForms = [
+    MedicineForm("Syrup", Image.asset("assets/images/syrup.png"), true),
+    MedicineForm(
         "Pill", Image.asset("assets/images/pills.png"), false),
-    MedicineType(
+    MedicineForm(
         "Capsule", Image.asset("assets/images/capsule.png"), false),
-    MedicineType(
+    MedicineForm(
         "Cream", Image.asset("assets/images/cream.png"), false),
-    MedicineType(
+    MedicineForm(
         "Drops", Image.asset("assets/images/drops.png"), false),
-    MedicineType(
+    MedicineForm(
         "Syringe", Image.asset("assets/images/syringe.png"), false),
   ];
 
   //-------------Pill object------------------
   int howManyWeeks = 1;
-  String selectWeight;
-  DateTime setDate = DateTime.now();
+  String selectedUnit;
+  DateTime selectedDate = DateTime.now();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
 
-  //==========================================
-
-  //-------------- Database and notifications ------------------
-  final Repository _repository = Repository();
-  final Notifications _notifications = Notifications();
-
-  //============================================================
 
   @override
   void initState() {
     super.initState();
-    selectWeight = weightValues[0];
-    initNotifies();
+    selectedUnit = pillUnits[0];
   }
-
-  //init notifications
-  Future initNotifies() async => flutterLocalNotificationsPlugin =
-      await _notifications.initNotifies(context);
 
   @override
   Widget build(BuildContext context) {
-    final deviceHeight = MediaQuery.of(context).size.height - 60.0;
+    final deviceHeight = MediaQuery
+        .of(context)
+        .size
+        .height - 60.0;
 
-    return Scaffold(
-      key: _scaffoldKey,
+    return
+      Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(248, 248, 248, 1),
       body: SafeArea(
@@ -102,37 +87,41 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
               Container(
                 padding: EdgeInsets.only(left: 15.0),
                 height: deviceHeight * 0.05,
+                alignment: Alignment.topCenter,
                 child: FittedBox(
                     child: Text(
-                  "Add Pills",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      .copyWith(color: Colors.black),
-                )),
+                      "افزودن دارو",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(color: Colors.black),
+                    )),
               ),
               SizedBox(
                 height: deviceHeight * 0.03,
               ),
               Container(
-                height: deviceHeight * 0.37,
+                height: deviceHeight * 0.30,
                 child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: FormFields(
                         howManyWeeks,
-                        selectWeight,
-                        popUpMenuItemChanged,
-                        sliderChanged,
+                        selectedUnit,
+                        onPopUpMenuItemChanged,
+                        onSliderChanged,
                         nameController,
                         amountController)),
               ),
               Container(
                 height: deviceHeight * 0.035,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0),
+
                   child: FittedBox(
                     child: Text(
-                      "Medicine form",
+                      "نوعیت دارو",
                       style: TextStyle(
                           color: Colors.grey[800],
                           fontSize: 18.0,
@@ -150,8 +139,8 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
-                    ...medicineTypes.map(
-                        (type) => MedicineTypeCard(type, medicineTypeClick))
+                    ...medicineForms.map(
+                            (type) => MedicineTypeCard(type, medicineFormClick))
                   ],
                 ),
               ),
@@ -174,7 +163,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                             children: [
                               SizedBox(width: 10),
                               Text(
-                                DateFormat.Hm().format(this.setDate),
+                                DateFormat.Hm().format(this.selectedDate),
                                 style: TextStyle(
                                     fontSize: 32.0,
                                     color: Colors.black,
@@ -184,7 +173,9 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                               Icon(
                                 Icons.access_time,
                                 size: 30,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
                               )
                             ],
                           ),
@@ -205,7 +196,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                             children: [
                               SizedBox(width: 10),
                               Text(
-                                DateFormat("dd.MM").format(this.setDate),
+                                DateFormat("dd.MM").format(this.selectedDate),
                                 style: TextStyle(
                                     fontSize: 32.0,
                                     color: Colors.black,
@@ -215,7 +206,9 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                               Icon(
                                 Icons.event,
                                 size: 30,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
                               )
                             ],
                           ),
@@ -232,9 +225,11 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                 width: double.infinity,
                 child: PlatformFlatButton(
                   handler: () async => savePill(),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
                   buttonChild: Text(
-                    "Done",
+                    "ذخیره",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -250,116 +245,75 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
   }
 
   //slider changer
-  void sliderChanged(double value) =>
+  void onSliderChanged(double value) =>
       setState(() => this.howManyWeeks = value.round());
 
   //choose popum menu item
-  void popUpMenuItemChanged(String value) =>
-      setState(() => this.selectWeight = value);
+  void onPopUpMenuItemChanged(String value) =>
+      setState(() => this.selectedUnit = value);
 
-  //------------------------OPEN TIME PICKER (SHOW)----------------------------
-  //------------------------CHANGE CHOOSE PILL TIME----------------------------
 
   Future<void> openTimePicker() async {
     await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-            helpText: "Choose Time")
+        context: context,
+        initialTime: TimeOfDay.now(),
+        helpText: "انتخاب ساعت")
         .then((value) {
-      DateTime newDate = DateTime(
-          setDate.year,
-          setDate.month,
-          setDate.day,
-          value != null ? value.hour : setDate.hour,
-          value != null ? value.minute : setDate.minute);
-      setState(() => setDate = newDate);
-      print(newDate.hour);
-      print(newDate.minute);
+      if (value != null) {
+        DateTime newDate = DateTime(selectedDate.year,
+            selectedDate.month,
+            selectedDate.day, value.hour, value.minute);
+        setState(() => selectedDate = newDate);
+      }
     });
   }
 
-  //====================================================================
-
-  //-------------------------SHOW DATE PICKER AND CHANGE CURRENT CHOOSE DATE-------------------------------
   Future<void> openDatePicker() async {
     await showDatePicker(
-            context: context,
-            initialDate: setDate,
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(Duration(days: 100000)))
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(Duration(days: 100000)),
+        helpText: 'انتخاب تاریخ'
+    )
         .then((value) {
-      DateTime newDate = DateTime(
-          value != null ? value.year : setDate.year,
-          value != null ? value.month : setDate.month,
-          value != null ? value.day : setDate.day,
-          setDate.hour,
-          setDate.minute);
-      setState(() => setDate = newDate);
-      print(setDate.day);
-      print(setDate.month);
-      print(setDate.year);
+      if (value != null) {
+        DateTime newDate = DateTime(
+            value.year, value.month, value.day, selectedDate.hour,
+            selectedDate.minute);
+        setState(() => selectedDate = newDate);
+      }
     });
   }
 
-  //=======================================================================================================
+  savePill() {
 
-  //--------------------------------------SAVE PILL IN DATABASE---------------------------------------
-  Future savePill() async {
-    //check if medicine time is lower than actual time
-    if (setDate.millisecondsSinceEpoch <=
-        DateTime.now().millisecondsSinceEpoch) {
-      snackbar.showSnack(
-          "Check your medicine time and date", _scaffoldKey, null);
-    } else {
+    if (selectedDate.millisecondsSinceEpoch >=
+        DateTime
+            .now()
+            .millisecondsSinceEpoch) {
       //create pill object
       Pill pill = Pill(
           amount: amountController.text,
           howManyWeeks: howManyWeeks,
-          medicineForm: medicineTypes[medicineTypes.indexWhere((element) => element.isChoose == true)].name,
+          medicineForm: medicineForms[medicineForms.indexWhere((
+              element) => element.isChoose == true)].name,
           name: nameController.text,
-          time: setDate.millisecondsSinceEpoch,
-          type: selectWeight,
+          time: selectedDate.millisecondsSinceEpoch,
+          type: selectedUnit,
           notifyId: Random().nextInt(10000000));
 
-      //---------------------| Save as many medicines as many user checks |----------------------
-      for (int i = 0; i < howManyWeeks; i++) {
-        dynamic result =
-            await _repository.insertData("Pills", pill.pillToMap());
-        if (result == null) {
-          snackbar.showSnack("Something went wrong", _scaffoldKey, null);
-          return;
-        } else {
-          //set the notification schneudele
-          tz.initializeTimeZones();
-          tz.setLocalLocation(tz.getLocation('Europe/Warsaw'));
-          await _notifications.showNotification(pill.name, pill.amount + " " + pill.medicineForm + " " + pill.type, time,
-              pill.notifyId,
-              flutterLocalNotificationsPlugin);
-          setDate = setDate.add(Duration(milliseconds: 604800000));
-          pill.time = setDate.millisecondsSinceEpoch;
-          pill.notifyId = Random().nextInt(10000000);
-        }
-      }
-      //---------------------------------------------------------------------------------------
-      snackbar.showSnack("Saved", _scaffoldKey, null);
+      Pill.addPill(pill);
+
       Navigator.pop(context);
     }
   }
 
-  //=================================================================================================
-
-  //----------------------------CLICK ON MEDICINE FORM CONTAINER----------------------------------------
-  void medicineTypeClick(MedicineType medicine) {
+  void medicineFormClick(MedicineForm medicine) {
     setState(() {
-      medicineTypes.forEach((medicineType) => medicineType.isChoose = false);
-      medicineTypes[medicineTypes.indexOf(medicine)].isChoose = true;
+      medicineForms.forEach((medicineType) => medicineType.isChoose = false);
+      medicineForms[medicineForms.indexOf(medicine)].isChoose = true;
     });
   }
-
-  //=====================================================================================================
-
-  //get time difference
-  int get time =>
-      setDate.millisecondsSinceEpoch -
-      tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
 }
+

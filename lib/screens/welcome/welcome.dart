@@ -11,7 +11,7 @@ class Welcome extends StatelessWidget {
 
     void goToHomeScreen() => Navigator.pushReplacementNamed(context, "/home");
 
-    Timer(Duration(seconds: 100), goToHomeScreen);
+    Timer(Duration(seconds: 4), goToHomeScreen);
 
     return Scaffold(
       body: SafeArea(

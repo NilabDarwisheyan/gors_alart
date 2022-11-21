@@ -12,14 +12,7 @@ class PlatformFlatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isIOS
-        ? CupertinoButton(
-            child: this.buttonChild,
-            color: this.color,
-            onPressed: this.handler,
-            borderRadius: BorderRadius.circular(15.0),
-          )
-        : FlatButton(
+    return FlatButton(
             color: this.color,
             child: this.buttonChild,
             onPressed: this.handler,

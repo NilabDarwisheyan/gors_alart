@@ -1,11 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 
-class MedicineType{
+class MedicineForm{
 
   String name;
   Widget image;
   bool isChoose;
-  MedicineType(this.name,this.image,this.isChoose);
+  MedicineForm(this.name,this.image,this.isChoose);
 
 }

@@ -26,5 +26,4 @@ class CalendarDayModel {
     daysList[0].isChecked = true;
     return daysList;
   }
-  //============================================================
 }

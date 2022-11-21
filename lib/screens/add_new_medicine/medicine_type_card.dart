@@ -3,7 +3,7 @@ import 'package:medicine/models/medicine_type.dart';
 
 
 class MedicineTypeCard extends StatelessWidget {
-  final MedicineType pillType;
+  final MedicineForm pillType;
   final Function handler;
   MedicineTypeCard(this.pillType,this.handler);
   @override
