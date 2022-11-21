@@ -9,11 +9,11 @@ class TitleAndMessage extends StatelessWidget {
     return  Column(
       children: [
         Container(
-          height: deviceHeight * 0.15,
+          height: deviceHeight * 0.10,
           child: Padding(
             padding: const EdgeInsets.only(left: 40.0, right: 40.0),
               child: AutoSizeText(
-                "Be in control of your meds",
+                "به موقع دارو مصرف کن",
                 style: Theme.of(context)
                     .textTheme
                     .headline1
@@ -28,7 +28,7 @@ class TitleAndMessage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 40.0, right: 40.0),
             child: AutoSizeText(
-              "An easy-to-use and reliable app that helps you remember to take your meds at the right time",
+              "اپلیکیشن ساده که به شما یاد اوری میکند تا قرص های تان را فراموش نکنید.",
               style: Theme.of(context)
                   .textTheme
                   .headline5

@@ -18,6 +18,74 @@ class Pill {
       this.type,
       this.notifyId});
 
+
+  static Map<int,Pill> pills = {
+    1:Pill(
+        id:1,
+        name: "paracetamol",
+        amount:"2",
+        type: "pills",
+        howManyWeeks:2,
+        medicineForm: "Pill",
+        time: 1669042926954,
+        notifyId: 123123),
+    2:Pill(
+        id:2,
+        name: "paracetamol",
+        amount:"2",
+        type: "ml",
+        howManyWeeks:2,
+        medicineForm: "Syrup",
+        time: 1669042826954,
+        notifyId: 123123),
+    3:Pill(
+        id:3,
+        name: "paracetamol",
+        amount:"2",
+        type: "pills",
+        howManyWeeks:2,
+        medicineForm: "Capsule",
+        time: 1669052726954,
+        notifyId: 123123),
+  };
+  //   Pill(
+  //       id:1,
+  //       name: "paracetamol",
+  //       amount:"2",
+  //       type: "pills",
+  //       howManyWeeks:2,
+  //       medicineForm: "Syrup",
+  //       time: 123132123,
+  //       notifyId: 123123),
+  //   Pill(
+  //       id:1,
+  //       name: "paracetamol",
+  //       amount:"2",
+  //       type: "pills",
+  //       howManyWeeks:2,
+  //       medicineForm: "Syrup",
+  //       time: 123132123,
+  //       notifyId: 123123),
+  //   Pill(
+  //       id:1,
+  //       name: "paracetamol",
+  //       amount:"2",
+  //       type: "pills",
+  //       howManyWeeks:2,
+  //       medicineForm: "Syrup",
+  //       time: 123132123,
+  //       notifyId: 123123),
+  //   Pill(
+  //       id:1,
+  //       name: "paracetamol",
+  //       amount:"2",
+  //       type: "pills",
+  //       howManyWeeks:2,
+  //       medicineForm: "Syrup",
+  //       time: 123132123,
+  //       notifyId: 123123),
+  // ];
+
   //------------------set pill to map-------------------
 
   Map<String, dynamic> pillToMap() {

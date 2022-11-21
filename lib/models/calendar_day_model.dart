@@ -11,7 +11,7 @@ class CalendarDayModel {
   CalendarDayModel({this.dayLetter,this.dayNumber,this.year, this.month, this.isChecked});
 
   //----------------| get current 7 days |----------------------
-  List<CalendarDayModel> getCurrentDays() {
+  static List<CalendarDayModel> getCurrentDays() {
     final List<CalendarDayModel> daysList = List();
     DateTime currentTime = DateTime.now();
     for (int i = 0; i < 7; i++) {
