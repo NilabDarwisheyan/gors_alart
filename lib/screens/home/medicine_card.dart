@@ -16,7 +16,7 @@ class MedicineCard extends StatelessWidget {
     return Card(
         elevation: 1,
         margin: EdgeInsets.symmetric(vertical: 8.0),
-        color: Colors.yellow,
+        color: Colors.white,
         child: ListTile(
             onLongPress: () =>
                 _showDeleteDialog(context, medicine),
